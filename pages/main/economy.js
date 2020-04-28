@@ -1,112 +1,118 @@
-import React from 'react'
-import Sheetapi from '../../config/api'
-import dynamic from 'next/dynamic'
-import Navbar_main from '../../components/nav_main';
-import Sidebar from '../../components/layout/sidebar';
-import Footer from '../../components/layout/footer';
-import _ from 'lodash'
-
-const PieEconomy = dynamic(
-    () => import('../../components/chart/pieEconomy'),
-    { ssr: false }
-)
-
-const PieEconomy2 = dynamic(
-    () => import('../../components/chart/pieEconomy2'),
-    { ssr: false }
-)
-
-const PieEconomy3 = dynamic(
-    () => import('../../components/chart/pieEconomy3'),
-    { ssr: false }
-)
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import _ from 'lodash';
+import Dashboard from '../../components/layout/dashboard';
+import { useMediaQuery } from 'react-responsive';
+import Empty from '../../components/Empty';
 
 const BarEconomy = dynamic(
     () => import('../../components/chart/barEconomy'),
     { ssr: false }
 )
 
-const BarEconomy2 = dynamic(
+const BarEconomy3 = dynamic(
     () => import('../../components/chart/barEconomy2'),
     { ssr: false }
 )
 
-const BarEconomy3 = dynamic(
+const BarEconomy2 = dynamic(
     () => import('../../components/chart/barEconomy3'),
     { ssr: false }
 )
 
+const PieEconomy = dynamic(
+    () => import('../../components/chart/pieEconomy2'),
+    { ssr: false }
+)
 
-class Economy extends React.Component {
+const PieEconomy2 = dynamic(
+    () => import('../../components/chart/pieEconomy3'),
+    { ssr: false }
+)
 
-    constructor(props) {
-        super(props);
+const Economy = () => {
 
-        this.state = {
-            status: true
-        }
+    const isLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+    const isTablet = useMediaQuery({ minWidth: 768 })
+    const isMobile = useMediaQuery({ maxDeviceWidth: 768 })
+
+    const [tokenError, setTokenError] = useState(false)
+
+    const statusToken = (token) => {
+        setTokenError(token)
     }
 
-    onConfirm = (order) => {
-        this.setState({
-            status: order,
-        })
-    }
+    return (
 
+        <React.Fragment>
+            {
+                typeof document === 'undefined' ?
+                    null :
+                    <React.Fragment>
+                        <Head>
+                            <title>Eldery Dashboard</title>
+                            <link rel='icon' href='/static/logomain.svg' />
+                        </Head>
+                        <Dashboard>
+                            <div className="warp-main">
+                                {
+                                    !tokenError ?
+                                        <React.Fragment>
+                                            <div className="page-content-main">
+                                                <div className="container-fluid-main">
+                                                    <h1 className="text-center">ข้อมูลด้านเศรษฐกิจ</h1>
+                                                    <h2 className="small text-center">ของประชากรผู้สูงอายุ ภายในอำเภอกะทู้ จังหวัดภูเก็ต</h2>
+                                                    {
+                                                        isLaptop || isTablet ?
+                                                            <div className="info-main">
+                                                                <div className="warp-chart-main ">
+                                                                    <div className="chart-row">
+                                                                        <PieEconomy onToken={statusToken} />
+                                                                        <BarEconomy />
+                                                                    </div>
+                                                                    <div className="chart-row">
+                                                                        <PieEconomy2 />
+                                                                        <BarEconomy2 />
+                                                                    </div>
 
-    async componentDidMount() {
-        await localStorage.setItem("myOauth", JSON.stringify(await Sheetapi.postSheetValues()))
-
-    }
-
-    render() {
-
-        return (
-            <div className="warp-main">
-                <div className={`wrapper${this.state.status ? " menuDisplayed" : ""}`}>
-                    <Navbar_main confirm={this.onConfirm} status={this.state.status} />
-                    <Sidebar status={this.state.status} />
-
-
-                    <div className="page-content-wrapper">
-                        <div className="container-fluid">
-                            <h1 className="text-center">ด้านเศรษฐกิจ</h1>
-                            <h4 className="text-center">ของประชากรผู้สูงอายุภายในตำบลกะทู้ อำเภอกะทู้ จังหวัดภูเก็ต</h4>
-
-                            <div className="warp-chart">
-                                <div className="chart-contents">
-                                    <PieEconomy />
-                                </div>
-                                <div className="chart-contents">
-                                    <PieEconomy2 />
-                                </div>
-
+                                                                    <div className="chart-row">
+                                                                        <BarEconomy3 />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            isMobile ?
+                                                                <div className="info-main">
+                                                                    <div className="warp-chart-main ">
+                                                                        <div className="chart-col">
+                                                                            <PieEconomy onToken={statusToken} />
+                                                                            <BarEconomy />
+                                                                            <PieEconomy2 />
+                                                                            <BarEconomy2 />
+                                                                            <BarEconomy3 />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                :
+                                                                null
+                                                    }
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                        :
+                                        <Empty />
+                                }
                             </div>
+                        </Dashboard>
 
-                            <div className="warp-chart">
-                                <div className="chart-contents">
-                                    <BarEconomy />
-                                </div>
-                                <div className="chart-contents">
-                                    <BarEconomy2 />
-                                </div>
-                            </div>
+                    </React.Fragment>
+            }
 
-                            <div className="warp-chart">
-                                <div className="chart-contents">
-                                    <BarEconomy3 />
-                                </div>
-                                <div className="chart-contents">
-                                    <PieEconomy3 />
-                                </div>
-                            </div>
-                            <Footer nameFooter="economy" />
-                        </div>
-                    </div>
-                </div>
+        </React.Fragment>
 
-            </div>
-        )
-    }
+
+
+    )
 }
 export default Economy;

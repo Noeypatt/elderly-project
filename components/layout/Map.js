@@ -28,20 +28,7 @@ const colorScale = scaleLinear()
         "#79d27d"
     ])
 
-const SpinnerPage = () => {
-    return (
-        <React.Fragment>
-            <div>
-                <Typed
-                    strings={['กรุณรอสักครู่...', 'กำลังดาวน์โหลด...']}
-                    typeSpeed={45}
-                />
-            </div>
-        </React.Fragment>
-    );
-}
-
-class StudentMap extends Component {
+class Map extends Component {
     constructor() {
         super()
         this.state = {
@@ -49,7 +36,25 @@ class StudentMap extends Component {
             geographyPaths: [],
             center: [98.3185, 7.9801249],
             zoom: 40,
-            dataList: []
+            dataList: [
+                ["Kamala", "กมลา", "0", "<h6>ตำบล: กมลา </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Kathu", "กะทู้", "0", "<h6>ตำบล: กะทู้ </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Pa Tong", "ป่าตอง", "0", "<h6>ตำบล: ป่าตอง </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Chalong", "ฉลอง", "0", "<h6>ตำบล: ฉลอง </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Ka Ron", "กะรน", "0", "<h6>ตำบล: กะรน </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Ko Kaeo", "เกาะแก้ว", "0", "<h6>ตำบล: เกาะแก้ว </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Ratsada", "รัษฎา", "0", "<h6>ตำบล: รัษฎา </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Rawai", "ราไวย์", "0", "<h6>ตำบล: ราไวย์ </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Talat Nuea", "ตลาดเหนือ", "0", "<h6>ตำบล: ตลาดเหนือ </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Talat Yai", "ตลาดใหญ่", "0", "<h6>ตำบล: ตลาดใหญ่ </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Wichit", "วิชิต", "0", "<h6>ตำบล: วิชิต </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Choeng Tale", "เชิงทะเล", "0", "<h6>ตำบล: เชิงทะเล </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Mai Khao", "ไม้ขาว", "0", "<h6>ตำบล: ไม้ขาว </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Pa Khlok", "ป่าคลอก", "0", "<h6>ตำบล: ป่าคลอก </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Sakhu", "สาคู", "0", "<h6>ตำบล: สาคู </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Si Sunthon", "ศรีสุนทร", "0", "<h6>ตำบล: สาคู </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+                ["Thep Krasatti", "เทพกระษัตรี", "0", "<h6>ตำบล: กมลา </h6>จำนวนผู้สูงอายุ: 0 คน</div>"],
+            ]
 
         }
         this.loadPaths = this.loadPaths.bind(this)
@@ -60,14 +65,9 @@ class StudentMap extends Component {
 
     async componentDidMount() {
         let userOauth = JSON.parse(localStorage.getItem("myOauth"))
-        this.access_token = userOauth.data.access_token
-
-        setTimeout(() => {
-            this.listName('แผนที่!B5:E21')
-        }, 1000)
+        this.access_token = `${userOauth != null ? userOauth.data.access_token : ""}`
+        this.listName('แผนที่!B5:E21')
         this.loadPaths()
-
-
     }
 
     listName = async (v) => {
@@ -75,9 +75,10 @@ class StudentMap extends Component {
 
             this.list = await Sheetapi.getSheet(this.access_token, v)
             this.setState({ dataList: this.list })
+            this.props.onToken(false)
 
         } catch (err) {
-            console.log(err);
+            this.props.onToken(true)
         }
     }
 
@@ -115,9 +116,9 @@ class StudentMap extends Component {
     render() {
 
         const { dataList } = this.state
-        if (dataList.length === 0) {
-            return SpinnerPage()
-        }
+        // if (dataList.length === 0) {
+        //     return SpinnerPage()
+        // }
 
         return (
             <React.Fragment >
@@ -173,7 +174,7 @@ class StudentMap extends Component {
                                                             outline: "none",
                                                         },
                                                         pressed: {
-                                                            fill: "#FF5722",
+                                                            fill: "#c4def6",
                                                             stroke: "#40bf45",
                                                             strokeWidth: 0.075,
                                                             outline: "none",
@@ -202,4 +203,4 @@ class StudentMap extends Component {
     }
 }
 
-export default StudentMap
+export default Map

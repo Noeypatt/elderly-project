@@ -1,48 +1,38 @@
 .warp-map {
-    display: flex;
-    margin: 1rem 0;
-    align-items: center;
-    text-align: center;
-  
-    @media (max-width: 1199.98px) {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .map-Img {
-      display: flex;
-      justify-content: center;
-      width: 40%;
-      text-align: center;
-  
-      @media (max-width: 1199.98px) {
-        width: 100%;
-      }
-  
-      svg {
-        width: 600px;
-        height: 600px;
-  
-        @media (max-width: 575.98px) {
-          width: 800px;
-          height: 400px;
-        }
-      }
-    }
-  
-    .map-content {
-      display: flex;
-      justify-content: center;
-      width: 60%;
-      text-align: center;
-    }
-  
-    .chart-contents {
-      display: flex;
-      background-color: white;
-      border-radius: 0.5rem;
-      margin: 0.5rem 1rem;
-      padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-right: 0 !important;
+
+  @media (max-width: 1199.98px) {
+    width: 100%;
+  }
+
+  svg {
+    width: 400px;
+    height: 500px;
+
+    @media (max-width: 575.98px) {
+      width: 300px;
+      height: 400px;
     }
   }
-  
+}
+
+.warp-small-map {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-right: 0 !important;
+
+  svg {
+    width: 300px;
+    height: 400px;
+  }
+ 
+}
+
+.warp-load-map {
+  width: 400px;
+  height: 500px;
+}

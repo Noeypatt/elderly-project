@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Chart from 'react-apexcharts'
-import Sheetapi from '../../config/api'
+import Chart from 'react-apexcharts';
+import Sheetapi from '../../config/api';
+import { useMediaQuery } from 'react-responsive';
 
 
 const BarHospital2 = () => {
+
+    const isTablet = useMediaQuery({ minWidth: 768 })
+    const isSmallScreen = useMediaQuery({ maxWidth: 768 })
+
     const [options, setOptions] = useState({
         title: {
             text: 'โรคประจำตัวของผู้สูงอายุ',
             align: 'left'
+        },
+        plotOptions: {
+            bar: { horizontal: true }
         },
         chart: {
             stacked: true,
@@ -19,39 +27,28 @@ const BarHospital2 = () => {
             }
         },
         dataLabels: { enabled: false },
-        responsive: [{
-            breakpoint: 1000,
-            options: {
-                legend: {
-                    position: 'bottom',
-                    offsetX: -10,
-                    offsetY: 0
-                }
-            }
-        }],
-        plotOptions: {
-            bar: {
-                horizontal: false,
-            },
-        },
-        legend: {
-            position: 'top',
-            offsetY: 40
-        },
-        fill: {
-            opacity: 1
-        },
         tooltip: {
             y: {
                 formatter: function (val) {
                     return val + " คน"
                 }
             }
+        },
+        xaxis: {
+            categories: ["ไม่มีโรคประจำตัว", "ความดันโลหิตสูง", "โรคหัวใจ", "โรคเบาหวาน", "อัมพฤกษ์/อัมพาต", "โรคไต", "โรคมะเร็ง", "โรคสมองเสื่อม", "ปัญหาด้านสายตา", "ปัญหาด้านหู", "โรคอื่นๆ", "มากกว่า 1 โรค"]
         }
     })
 
-    const [series, setSeries] = useState([])
-    const [dataName, setDataName] = useState([])
+    const [series, setSeries] = useState([
+        {
+            name: 'เพศชาย',
+            data: [50, 50, 50, 50, 50]
+        },
+        {
+            name: 'เพศหญิง',
+            data: [50, 50, 50, 50, 50]
+        }
+    ])
 
     useEffect(() => {
         fetchData()
@@ -67,7 +64,6 @@ const BarHospital2 = () => {
     const namelist = async (token, value) => {
         try {
             var list = await Sheetapi.getSheet(token, value)
-            setDataName(_.flatten(list))
 
             setOptions({
                 xaxis: {
@@ -92,51 +88,33 @@ const BarHospital2 = () => {
 
     return (
         <React.Fragment>
-            <div className="warp-chart-small">
-                <Chart options={options}
-                    series={series}
-                    type="bar"
-                    height="300"
-                    width="290"
-                />
-            </div>
-
-            <div className="warp-chart-mobile">
-                <Chart options={options}
-                    series={series}
-                    type="bar"
-                    height="300"
-                    width="400"
-                />
-            </div>
-
-            <div className="warp-chart-tablets">
-                <Chart options={options}
-                    series={series}
-                    type="bar"
-                    height="325"
-                    width="450"
-                />
-            </div>
-
-            <div className="warp-chart-desktops">
-                <Chart options={options}
-                    series={series}
-                    type="bar"
-                    height="350"
-                    width="500"
-                />
-            </div>
-
-            <div className="warp-chart-large">
-                <Chart
-                    options={options}
-                    series={series}
-                    type="bar"
-                    height="350"
-                    width="450"
-                />
-            </div>
+            {
+                isSmallScreen ?
+                    <Chart
+                        options={options}
+                        series={series}
+                        type="bar"
+                        height="300"
+                        width="300"
+                    />
+                    :
+                    isTablet ?
+                        <Chart
+                            options={options}
+                            series={series}
+                            type="bar"
+                            height="400"
+                            width="500"
+                        />
+                        :
+                        <Chart
+                            options={options}
+                            series={series}
+                            type="bar"
+                            height="400"
+                            width="600"
+                        />
+            }
         </React.Fragment>
     )
 }

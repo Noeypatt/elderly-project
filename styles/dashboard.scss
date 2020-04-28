@@ -1,0 +1,116 @@
+$font-header: "Frank Ruhl Libre" !important;
+$bg-color: white !important;
+$font-color: rgba(0, 0, 0, 0.65) !important;
+$hover-color: #1890ff;
+$primary-color: #39b54a !important;
+
+.ant-layout {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    .logo {
+        cursor: pointer;
+        margin: 1rem;
+        h2 {
+            font-family: $font-header;
+        }
+        h6 {
+            font-family: $font-header;
+        }
+    }
+
+    #components-layout-demo-custom-trigger .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    #components-layout-demo-custom-trigger .trigger:hover {
+        color: $hover-color;
+    }
+
+    .site-layout .site-layout-background {
+        background: $bg-color;
+    }
+
+    .ant-menu {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+    .ant-layout-header {
+        display: flex;
+        align-items: center;
+        padding: 1rem !important;
+        svg {
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        nav {
+            min-height: auto;
+        }
+        .layout-header-navbar {
+            display: flex;
+            justify-content: flex-end;
+
+            p {
+                color: $font-color;
+                cursor: pointer;
+                margin-bottom: 0;
+                margin: 0.5rem 1rem!important;
+            }
+            p:hover {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .ant-menu-inline-collapsed > .ant-menu-item {
+        display: flex;
+        justify-content: center;
+    }
+
+    .ant-menu-item {
+        span {
+            margin-right: 0 !important;
+        }
+
+        svg {
+            margin-right: 10px;
+        }
+    }
+
+    .ant-menu-item > a:hover {
+        color: $primary-color;
+    }
+
+    .ant-menu-item:active {
+        background-color: #dcedc8;
+    }
+
+    .ant-menu-item > a:only-child {
+        display: flex;
+        align-items: center;
+    }
+
+    .ant-menu-vertical .ant-menu-item:not(:last-child) {
+        display: flex;
+    }
+
+    .ant-layout-sider {
+        background: $bg-color;
+    }
+
+    .ant-menu-item.ant-menu-item-only-child .anticon {
+        margin-right: 10px;
+    }
+
+    .ant-layout-content {
+        margin: 24px 16px;
+        padding: 24;
+        min-height: auto !important;
+    }
+}

@@ -1,0 +1,215 @@
+$font-header: "Frank Ruhl Libre" !important;
+$font-text-sub: #978bab !important;
+
+.warp-about {
+  .page-content {
+    padding-top: 3rem;
+    
+    @media (max-width: 575.98px) {
+     padding-top: 1rem;
+    }
+
+    .container-fluid {
+      display: flex;
+      flex-direction: column;
+      .head-content {
+        h3 {
+          font-size: 2rem !important;
+          margin-bottom: 1rem !important;
+        }
+      }
+      .detail-content {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 3rem;
+
+        @media (max-width: 575.98px) {
+          flex-direction: column;
+          align-items: center;
+          margin: 0;
+        }
+        img {
+          height: 20rem;
+          margin-right: 1rem;
+          @media (max-width: 575.98px) {
+            margin-right: 0;
+            height: 15rem;
+            width: 15rem;
+          }
+        }
+
+        .data-detail-content {
+          display: flex;
+          flex-direction: column;
+
+          @media (max-width: 575.98px) {
+            margin-top: 1rem;
+          }
+
+          .title-content {
+            padding: 0 3rem;
+
+            @media (max-width: 768px) {
+              padding: 0;
+            }
+
+            .header-title-content {
+              font-weight: bold !important;
+            }
+
+            h6 {
+              text-align: start;
+              opacity: 0.8;
+              margin-bottom: 0.5rem !important;
+              font-weight: lighter;
+            }
+          }
+          .more-content {
+            padding: 0 3rem;
+            display: flex;
+            @media (max-width: 575.98px) {
+              justify-content: center;
+            }
+            @media (max-width: 768px) {
+              padding: 0;
+            }
+
+            h6 {
+              margin-top: 1rem;
+              font-weight: bold;
+              text-align: center;
+            }
+
+            img {
+              cursor: pointer;
+              margin-top: 0.5rem;
+              margin-left: 1rem;
+              width: 2rem;
+              height: auto;
+            }
+            .hvr-wobble-horizontal:hover {
+              animation-name: hvr-wobble-horizontal;
+              animation-duration: 1s;
+              animation-timing-function: ease-in-out;
+              animation-iteration-count: 1;
+              display: inline-block;
+              vertical-align: middle;
+              transform: perspective(1px) translateZ(0);
+            }
+
+            @keyframes hvr-wobble-horizontal {
+              17% {
+                transform: translateX(8px);
+              }
+              34% {
+                transform: translateX(-6px);
+              }
+              50% {
+                transform: translateX(4px);
+              }
+              70% {
+                transform: translateX(-2px);
+              }
+              80% {
+                transform: translateX(1px);
+              }
+              100% {
+                transform: translateX(0);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.warp-about-page {
+  .page-content {
+    padding-top: 3rem;
+
+
+    .container-fluid {
+      display: flex;
+      flex-direction: column;
+      .head-content {
+        h1.name-header {
+          font-family: $font-header;
+        }
+
+        .title-about {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          h6 {
+            margin-top: 0.5rem;
+            color: $font-text-sub;
+            font-style: italic;
+          }
+        }
+      }
+      .detail-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 3rem;
+
+        @media (max-width: 575.98px) {
+          flex-direction: column;
+        }
+        img {
+          height: 20rem;
+          margin-right: 1rem;
+          @media (max-width: 575.98px) {
+            margin-right: 0;
+            height: 18rem;
+          }
+        }
+
+        .data-detail-content {
+          margin-left: 2rem;
+          display: flex;
+          flex-direction: column;
+
+          @media (max-width: 575.98px) {
+            margin-top: 1rem;
+            margin-left: 0;
+          }
+
+          .title-content {
+            padding: 0 3rem;
+
+            @media (max-width: 768px) {
+              padding: 0;
+            }
+
+            .header-title-content {
+              font-weight: bold !important;
+            }
+
+            .sub-title-content {
+              margin-left: 1rem;
+            }
+
+            h6 {
+              text-align: start;
+              opacity: 0.8;
+              margin-bottom: 0.5rem !important;
+              font-weight: lighter;
+            }
+          }
+          .more-content {
+            padding: 0 3rem;
+            display: flex;
+
+            h6 {
+              margin-top: 1rem;
+              font-weight: bold;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

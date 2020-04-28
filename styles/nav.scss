@@ -1,131 +1,82 @@
-//logoMain
-.warp-logo-main {
+$font-color: #071d40 !important;
+$font-header: "Frank Ruhl Libre" !important;
+$font-base: "Prompt", sans-serif;
+$primary-color: #39b54a !important;
+$bg-color: linear-gradient(to left, #a6d254, #83d2ae);
+$border-bg-color: 1px solid #83d2ae;
+$line-color: #e8e9fe;
+
+nav {
+  width: 100%;
+  height: 5rem;
   ul {
+    user-select: none;
     padding: 0.5rem;
-    img {
-      cursor: pointer;
-      width: 3rem;
-      height: 3rem;
-    }
-  }
-}
-
-//manu
-.warp-manu {
-  width: 100%;
-  ul {
     display: flex;
-    justify-content: flex-end !important;
-    list-style: none;
+    justify-content: space-between;
   }
 }
 
-nav {
+//Navbar-Scroll
+// nav {
+//   position: fixed;
+//   width: 100%;
+//   min-height: 5rem;
+//   top: 0;
+//   z-index: 1000;
+//   ul {
+//     user-select: none;
+//     padding: 0.5rem;
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// }
+
+// nav.scroll {
+//   position: fixed;
+//   width: 100%;
+//   top: 0;
+//   z-index: 1000;
+//   background-color: greenyellow;
+//   transition: background-color 0.4s ease-out;
+// }
+
+.warp-main {
   ul {
-    .warp-table {
-      width: 20%;
-    }
-  }
-}
-
-li {
-  display: flex;
-  cursor: pointer;
-  p {
-    font-size: 1.1rem !important;
     cursor: pointer;
-    color: black !important;
-    margin: 1rem 1.5rem !important;
-    margin-top: 1.7rem !important;
-  }
-  p:hover {
-    color: #bedadc;
-  }
-}
+    user-select: none;
+    margin-left: 0;
+    li.hamberger-active {
+      padding-left: 250px;
+      img {
+        width: 4rem;
+        height: 2rem;
+      }
+    }
 
-//Index
-nav {
-  background-color: white;
-  width: 100%;
-  min-height: 3vh;
-  height: auto;
-  display: flex;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-  z-index: 99;
-
-  @media (max-width: 993px) {
-    display: none !important;
-  }
-
-  //logo
-  ul {
-    width: 100%;
-    display: flex;
-
-    .nav-logo {
-      min-width: 40%;
-      list-style: none;
-      display: flex;
-      li {
-        margin-bottom: 0.5rem;
-
-        img {
-          margin-top: 1rem;
-          width: 5rem;
-          height: 2.5rem;
-        }
-        h4{
-          margin: 0;
-          margin-top: 1.8rem;
-        }
+    li.hamberger-non-active {
+      img {
+        width: 4rem;
+        height: 2rem;
       }
     }
   }
 }
 
-nav.nav-main {
-  min-height: 2vh;
-  line-height: 2vh;
-}
-
-nav.nav-other {
-  position: fixed;
-  min-height: 2vh;
-  line-height: 2vh;
-
-  .warp-nav-sidebar {
-    width: 100%;
-  }
-
-  ul {
-    width: 100%;
-    list-style: none;
-    .warp-table {
-      width: 100%;
-    }
-  }
-}
-
 .collapsible-menu {
-  @media (min-width: 993px) {
-    display: none;
-  }
-
+  height: 4rem;
+  padding: 1rem 0;
   background-color: rgb(255, 255, 255);
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
 
-  label {
-    text-align: center;
-    font-size: 1.5rem;
-    display: block;
-    cursor: pointer;
-    // background: url(menu.png) no-repeat left center;
-    padding: 1rem;
-    margin-bottom: 0 !important;
-  }
+  .warp-nav-sidebar {
+    display: flex;
+    padding: 0 1rem;
+    justify-content: space-between;
 
-  label:hover {
-    color: salmon;
+    h2 {
+      font-family: $font-header;
+    }
   }
 
   .menu-content {
@@ -139,6 +90,7 @@ nav.nav-other {
 
       li {
         p {
+          color: $font-color;
           display: block;
           padding: 10px;
           text-decoration: none;
@@ -147,48 +99,127 @@ nav.nav-other {
     }
   }
   .menu-content.show {
-    max-height: 100vh;
+    display: block;
+    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    opacity: 1;
+    background-color: #b3e5cc;
+    visibility: visible;
+
+    nav {
+      min-height: 2rem;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0.5rem 1rem;
+    }
+
     ul {
+      display: block;
+      height: 100vh;
+      width: 100%;
+      margin-left: 0 !important;
       padding: 0 !important;
       li {
         display: flex;
         flex-direction: column;
-        p {
+        width: 100%;
+        h5 {
           margin: 0.5rem !important;
         }
-        p:hover {
-          color: #c4def6 !important;
+        h5:hover {
+          color: $primary-color;
+        }
+      }
+      .menu-content-list {
+        height: 100vh;
+        margin-top: 2rem;
+        a{
+          width: 100%;
+          margin: 1rem 0;
         }
       }
     }
   }
+}
 
-  .warp-nav-sidebar {
-    width: 100% !important;
+ul {
+  margin-left: 4rem;
+  user-select: none;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+
+  li {
     display: flex;
-    justify-content: center;
+    align-items: center;
 
-    .nav-logo {
-      margin-bottom: 1rem;
-      li {
-        img {
-          margin-top: 1rem;
-          width: 5rem;
-          height: 2.5rem;
-        }
-        h4{
-          margin-top: 1.8rem;
-        }
+    .btn:focus {
+      box-shadow: none;
+
+      p:focus {
+        box-shadow: none;
       }
     }
-
-    .box-hamberger {
-      width: 3.5rem;
-      height: 4rem;
-
-      a.hamberger {
-        top: 2.4rem;
-      }
+    h2 {
+      cursor: pointer !important;
+      font-size: 2rem !important;
+      padding: 0 1rem !important;
+      font-family: $font-header;
     }
+    p {
+      cursor: pointer;
+      color: $font-color;
+      margin: 1rem !important;
+    }
+    p:hover {
+      color: $primary-color;
+    }
+
+    p.li-buttom-line {
+      border: $border-bg-color;
+      border-radius: 1.5rem;
+      padding: 0.5rem 2rem !important;
+      margin: 0 0.5rem 0 2rem !important;
+    }
+
+    p.li-buttom-line:hover {
+      color: white !important;
+      background: $bg-color;
+    }
+
+    p.li-buttom-line-active {
+      border: $border-bg-color;
+      border-radius: 1.5rem;
+      padding: 0.5rem 2rem !important;
+      margin: 0 1rem 0 0.5rem !important;
+      background: $bg-color;
+      color: white !important;
+    }
+    p.li-buttom-line-active:hover {
+      margin: 0 1rem 0 0.5rem !important;
+      color: $font-color;
+      border: $border-bg-color;
+      background: white !important;
+    }
+  }
+}
+
+//SideBar
+.ant-drawer-wrapper-body {
+  user-select: none;
+}
+
+.ant-drawer-body {
+  p:hover {
+    color: $primary-color;
   }
 }

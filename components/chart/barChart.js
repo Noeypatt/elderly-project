@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import Chart from 'react-apexcharts'
 import Sheetapi from '../../config/api'
-
+import { useMediaQuery } from 'react-responsive';
 
 const Barchart = () => {
+
+  const isSmallScreen = useMediaQuery({ maxWidth: 768 })
 
   const [options, setOptions] = useState({
     title: {
       text: 'สถานภาพของผู้สูงอายุ',
       align: 'left'
     },
+    responsive: [{
+      breakpoint: 575.98,
+      options: {
+        legend: {
+          position: "bottom",
+          offsetY: 5
+        },
+      },
+    }],
     chart: {
       stacked: true,
       toolbar: {
@@ -19,16 +30,6 @@ const Barchart = () => {
         enabled: true
       }
     },
-    responsive: [{
-      breakpoint: 1000,
-      options: {
-        legend: {
-          position: 'bottom',
-          offsetX: -10,
-          offsetY: 0
-        }
-      }
-    }],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -47,11 +48,27 @@ const Barchart = () => {
           return val + " คน"
         }
       }
+    },
+    xaxis: {
+      categories: ["โสด",
+        "สมรส",
+        "หม้าย",
+        "หย่าร้าง",
+        "เเยกกันอยู่",
+        "อื่นๆ"]
     }
   })
 
-  const [series, setSeries] = useState([])
-  const [dataName, setDataName] = useState([])
+  const [series, setSeries] = useState([
+    {
+      name: 'เพศชาย',
+      data: [50, 50, 50, 50, 50]
+    },
+    {
+      name: 'เพศหญิง',
+      data: [50, 50, 50, 50, 50]
+    }
+  ])
 
   useEffect(() => {
     fetchData()
@@ -67,7 +84,6 @@ const Barchart = () => {
   const namelist = async (token, value) => {
     try {
       var list = await Sheetapi.getSheet(token, value)
-      setDataName(_.flatten(list))
 
       setOptions({
         xaxis: {
@@ -93,52 +109,25 @@ const Barchart = () => {
 
   return (
     <React.Fragment>
-      <div className="warp-chart-small">
-        <Chart
-          options={options}
-          series={series}
-          type="bar" height="300"
-          width="250"
-        />
-      </div>
-
-      <div className="warp-chart-mobile">
-        <Chart
-          options={options}
-          series={series}
-          type="bar" height="200"
-          width="450"
-        />
-      </div>
-
-      <div className="warp-chart-tablets">
-        <Chart
-          options={options}
-          series={series}
-          type="bar" height="220"
-          width="500"
-        />
-      </div>
-
-      <div className="warp-chart-desktops">
-        <Chart
-          options={options}
-          series={series}
-          type="bar" height="245"
-          width="550"
-        />
-      </div>
-
-      <div className="warp-chart-large">
-        <Chart
-          options={options}
-          series={series}
-          type="bar" height="285"
-          width="600"
-        />
-      </div>
-    </React.Fragment>
-
+      {
+        isSmallScreen ?
+          <Chart
+            options={options}
+            series={series}
+            type="bar"
+            height="300"
+            width="300"
+          />
+          :
+          <Chart
+            options={options}
+            series={series}
+            type="bar"
+            height="285"
+            width="600"
+          />
+      }
+    </React.Fragment >
   )
 }
- export default Barchart;
+export default Barchart;

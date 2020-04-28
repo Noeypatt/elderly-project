@@ -1,13 +1,23 @@
-import React from 'react'
-import Sheetapi from '../../config/api'
-import dynamic from 'next/dynamic'
-import Navbar_main from '../../components/nav_main';
-import Sidebar from '../../components/layout/sidebar';
-import Footer from '../../components/layout/footer';
-import _ from 'lodash'
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import _ from 'lodash';
+import Dashboard from '../../components/layout/dashboard';
+import { useMediaQuery } from 'react-responsive';
+import Empty from '../../components/Empty';
 
 const BarSocial = dynamic(
     () => import('../../components/chart/barSocial'),
+    { ssr: false }
+)
+
+const PieSocial2 = dynamic(
+    () => import('../../components/chart/pieSocial'),
+    { ssr: false }
+)
+
+const PieSocial = dynamic(
+    () => import('../../components/chart/pieSocial2'),
     { ssr: false }
 )
 
@@ -17,74 +27,99 @@ const DonutSocial = dynamic(
 )
 
 
-const PieSocial = dynamic(
-    () => import('../../components/chart/pieSocial'),
-    { ssr: false }
-)
+const Social = () => {
 
-const PieSocial2 = dynamic(
-    () => import('../../components/chart/pieSocial2'),
-    { ssr: false }
-)
+    const isLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+    const isTablet = useMediaQuery({ minWidth: 768 })
+    const isMobile = useMediaQuery({ maxDeviceWidth: 768 })
 
-class Social extends React.Component {
+    const [tokenError, setTokenError] = useState(false)
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            status: true
-        }
+    const statusToken = (token) => {
+        setTokenError(token)
     }
 
-    onConfirm = (order) => {
-        this.setState({
-            status: order,
-        })
-    }
+    return (
+        <React.Fragment>
+            {
+                typeof document === 'undefined' ?
+                    null :
+                    <React.Fragment>
+                        <Head>
+                            <title>Eldery Dashboard</title>
+                            <link rel='icon' href='/static/logomain.svg' />
+                        </Head>
+                        <Dashboard>
+                            <div className="warp-main">
+                                {
+                                    !tokenError ?
+                                        <React.Fragment>
+                                            <div className="page-content-main">
+                                                <div className="container-fluid-main">
+                                                    <h1 className="text-center">ข้อมูลด้านสังคม</h1>
+                                                    <h2 className="small text-center">ของประชากรผู้สูงอายุ ภายในอำเภอกะทู้ จังหวัดภูเก็ต</h2>
 
+                                                    {
+                                                        isLaptop ?
+                                                            <div className="info-main">
+                                                                <div className="warp-chart-main ">
+                                                                    <div className="chart-row">
+                                                                        <DonutSocial onToken={statusToken} />
+                                                                        <BarSocial />
 
-    async componentDidMount() {
-        await localStorage.setItem("myOauth", JSON.stringify(await Sheetapi.postSheetValues()))
+                                                                    </div>
 
-    }
+                                                                    <div className="chart-row">
+                                                                        <PieSocial />
+                                                                        <PieSocial2 />
+                                                                    </div>
 
-    render() {
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            isTablet ?
+                                                                <div className="info-main">
+                                                                    <div className="warp-chart-main ">
+                                                                        <div className="chart-row">
+                                                                            <DonutSocial onToken={statusToken} />
+                                                                            <BarSocial />
 
-        return (
-            <div className="warp-main">
-                <div className={`wrapper${this.state.status ? " menuDisplayed" : ""}`}>
-                    <Navbar_main confirm={this.onConfirm} status={this.state.status} />
-                    <Sidebar status={this.state.status} />
+                                                                        </div>
 
+                                                                        <div className="chart-row">
+                                                                            <PieSocial />
+                                                                            <PieSocial2 />
+                                                                        </div>
 
-                    <div className="page-content-wrapper">
-                        <div className="container-fluid">
-                            <h1 className="text-center">สภาพทางสังคม</h1>
-                            <h4 className="text-center">ของประชากรผู้สูงอายุภายในตำบลกะทู้ อำเภอกะทู้ จังหวัดภูเก็ต</h4>
-                            <h2 className="small text-center"></h2>
-                            <div className="warp-chart">
-                                <div className="chart-contents">
-                                    <BarSocial />
-                                </div>
-                                <div className="chart-contents">
-                                    <DonutSocial />
-                                </div>
+                                                                    </div>
+                                                                </div>
+                                                                :
+                                                                isMobile ?
+                                                                    <div className="info-main">
+                                                                        <div className="warp-chart-main ">
+                                                                            <div className="chart-col">
+                                                                                <DonutSocial onToken={statusToken} />
+                                                                                <BarSocial />
+                                                                                <PieSocial />
+                                                                                <PieSocial2 />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    :
+                                                                    null
+                                                    }
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                        :
+                                        <Empty />
+                                }
                             </div>
-                            <div className="warp-chart">
-                                <div className="chart-contents">
-                                    <PieSocial />
-                                </div>
-                                <div className="chart-contents">
-                                    <PieSocial2 />
-                                </div>
-                            </div>
-                            <Footer nameFooter="social" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+                        </Dashboard>
+
+                    </React.Fragment>
+            }
+        </React.Fragment>
+    )
 }
 export default Social;
