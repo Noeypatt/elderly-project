@@ -32,7 +32,7 @@ export default async function handler(
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.GOOGLE_SHEET_ID,
-            range: `ข้อมูลทั่วไป!A9:AJ`,
+            range: `ข้อมูลด้านสุขภาพ!A9:V`,
         })
 
         if (response.data.values) {
@@ -40,17 +40,26 @@ export default async function handler(
             if (rows.length) {
                 return res.status(201).json({
                     data: rows.map((row) => ({
-                        sex: row[2],
-                        age: row[7],
-                        status: row[12],
-                        receiving_welfare: row[22],
-                        watcher: row[23],
-                        study: row[29],
-                        occupation: row[30],
-                        income_per_month: row[32],
-                        source_income: row[33],
-                        expenses: row[34],
-                        saving: row[35],
+                        detail: row[3],
+                        disability: row[4],
+                        disability_note: row[5],
+                        cause_of_disability: row[6],
+                        cause_of_disability_note: row[7],
+                        congenital_disease: row[8],
+                        congenital_disease_note: row[9],
+                        treatment: row[10],
+                        treatment_note: row[11],
+                        hospital: row[12],
+                        hospital_note: row[13],
+                        health_check: row[14],
+                        health_check_note: row[15],
+                        exercise: row[16],
+                        exercise_note: row[17],
+                        binge: row[18],
+                        binge_note: row[19],
+                        smoking:row[20],
+                        smoking_note:row[21]
+
                     })),
                     range: response.data.range,
                     total: rows.length,
